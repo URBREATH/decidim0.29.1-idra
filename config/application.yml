@@ -1,0 +1,6 @@
+development:
+  API_URL_URBANAGE: https://idra.ecosystem-urbanage.eu/Idra/api/v1/client/search #urbanage
+  API_URL_CATALOGUES_INFO: https://idra.ecosystem-urbanage.eu/Idra/api/v1/client/cataloguesInfo #urbanage
+production:
+  API_URL_URBANAGE: https://idra.ecosystem-urbanage.eu/Idra/api/v1/client/search #urbanage
+  API_URL_CATALOGUES_INFO: https://idra.ecosystem-urbanage.eu/Idra/api/v1/client/cataloguesInfo #urbanage
