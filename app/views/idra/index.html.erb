@@ -215,7 +215,7 @@
   }
 
 
-  #openModalButton:hover{
+  openModalButton:hover{
     transform:scale(1.05,1.05)
   }
 
@@ -240,7 +240,9 @@
 <%= prepend_javascript_pack_tag 'datasets_list' %>   <!-- Prima di application.js -->
 
 
-
+<script>
+  window.savedDatasets = <%= raw @datasets.as_json.to_json %>;
+</script>
 
 
 

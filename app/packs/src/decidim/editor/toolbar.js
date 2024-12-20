@@ -13,7 +13,7 @@ const createEditorToolbarGroup = () => {
   return html("div").dom((el) => el.classList.add("editor-toolbar-group"));
 };
 
-const createEditorToolbarToggle = (editor, { type, label, icon, action, activatable = true }) => {
+const createEditorToolbarToggle = (editor, { type, label, icon, action, activatable = true, text ='' }) => {
   return html("button").dom((ctrl) => {
     ctrl.classList.add("editor-toolbar-control");
     ctrl.dataset.editorType = type;
@@ -23,7 +23,12 @@ const createEditorToolbarToggle = (editor, { type, label, icon, action, activata
     ctrl.type = "button";
     ctrl.ariaLabel = label;
     ctrl.title = label;
-    ctrl.innerHTML = createIcon(icon);
+    if (icon) {
+      ctrl.innerHTML = createIcon(icon);
+    }
+    else if (text) {
+      ctrl.innerHTML = `<span class="toolbar-text">${text}</span>`;
+    };
     ctrl.addEventListener("click", (ev) => {
       ev.preventDefault();
       editor.commands.focus();
@@ -234,9 +239,210 @@ export default function createEditorToolbar(editor) {
           action: () => editor.commands.imageDialog()
         }).render(supported.nodes.includes("image"))
       )
+    ).append(
+      // SavedDatasets
+      createEditorToolbarGroup(editor).append(
+        createEditorToolbarToggle(editor, {
+          type: "customButton",
+          text: "<span style='color: #f1c232; display: inline-block; transform: translateY(-4px);'>★</span>",
+          label: "Saved Datasets",
+          action: () => openModal(editor)
+        })
+      )
     ).
     render()
   ;
+
+  let modalData = [];
+  let hasFetched = false; // Flag to check if data has been fetched
+
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      if (!hasFetched) { // Check if fetch hasn't been performed yet
+        fetch('/idra_modal_editor', {
+          method: 'GET',
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.text(); // Assuming the response is HTML
+            } else {
+              throw new Error('Failed to fetch the updated content');
+            }
+          })
+          .then((data) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const datasetElements = doc.querySelectorAll('#datasets-list a');
+            
+            // Parse the datasets
+            modalData = Array.from(datasetElements).map((dataset) => {
+              return {
+                title: dataset.textContent,
+                url: dataset.getAttribute('href'),
+              };
+            });
+  
+            hasFetched = true; // Set the flag to indicate that fetch has been performed
+            resolve();
+          })
+          .catch((error) => {
+            console.error('Error updating partial view:', error);
+            reject(error);
+          });
+      } else {
+        resolve();
+      }
+    });
+  }
+  
+  async function openModal() {
+    try {
+      await fetchData(); // Assicurati che i dati siano stati recuperati
+  
+      // Crea e stila il contenitore del modal
+      const modalContainer = document.createElement('div');
+      modalContainer.style.position = 'fixed';
+      modalContainer.style.top = '0';
+      modalContainer.style.left = '0';
+      modalContainer.style.width = '100%';
+      modalContainer.style.height = '100%';
+      modalContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+      modalContainer.style.display = 'flex';
+      modalContainer.style.justifyContent = 'center';
+      modalContainer.style.alignItems = 'center';
+      modalContainer.style.zIndex = '1000';
+  
+      // Crea e stila l'elemento modal con dimensioni fisse
+      const modal = document.createElement('div');
+      modal.style.backgroundColor = '#fff';
+      modal.style.borderRadius = '8px';
+      modal.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.3)';
+      modal.style.width = '800px'; // Larghezza fissa
+      modal.style.minHeight = '80vh'; // Altezza minima
+      modal.style.maxHeight = '80vh'; // Altezza massima
+      modal.style.position = 'relative';
+      modal.style.overflowY = 'auto'; // Previene lo scroll nel modal
+      modal.style.padding = '1em'; // Aggiungi padding per estetica
+      modal.style.boxSizing = 'border-box'; // Include padding nel calcolo dell'altezza
+  
+      // Crea e stila il contenuto del modal
+      const modalContent = document.createElement('div');
+      modalContent.id = 'modalContent';
+      modalContent.style.overflow = 'initial'
+      modalContent.style.maxHeight = '50vh'
+  
+      // Crea e stila la barra di ricerca
+      const searchBar = document.createElement('input');
+      searchBar.type = 'text';
+      searchBar.placeholder = 'Search...';
+      searchBar.style.width = '100%';
+      searchBar.style.padding = '10px';
+      searchBar.style.boxSizing = 'border-box';
+      searchBar.style.border = '1px solid #ccc';
+      searchBar.style.borderRadius = '5px';
+      searchBar.style.marginBottom = '10px';
+      searchBar.addEventListener('input', filterResults);
+  
+      // Crea e stila il contenitore dei link
+      const linksDiv = document.createElement('div');
+      linksDiv.id = 'linksContainer';
+      linksDiv.style.display = 'flex';
+      linksDiv.style.flexDirection = 'column';
+      linksDiv.style.gap = '10px'; // Aggiusta lo spazio tra gli elementi
+  
+      // Crea e stila il titolo del modal
+      const titleElement = document.createElement('h1');
+      titleElement.textContent = "Saved Datasets";
+      titleElement.style.textAlign = 'center';
+      modal.appendChild(titleElement);
+  
+      // Memorizza gli item originali della lista
+      const listItems = modalData.map(element => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('list-item');
+        listItem.style.display = 'flex';
+        listItem.style.justifyContent = 'space-between';
+        listItem.style.alignItems = 'center';
+  
+        const link = document.createElement('a');
+        link.href = element.url;
+        link.textContent = element.title;
+        link.target = "_blank"; // Apri in una nuova finestra
+  
+        var disabled = false;
+  
+        const copyButton = document.createElement('button');
+        copyButton.textContent = 'Add';
+        copyButton.style.marginLeft = '10px';
+        copyButton.style.borderRadius = '5px';
+        copyButton.style.padding = '5px 10px';
+        copyButton.style.color = 'white';
+        copyButton.style.cursor = 'pointer'; // Imposta il cursore a mano
+        copyButton.style.backgroundColor = '#2F4EA1'; // Imposta il colore di sfondo
+  
+        // Gestisci il click sul bottone per copiare e incollare il link nell'editor
+        copyButton.addEventListener('click', () => {
+          copyButton.textContent = 'Done';
+          copyButton.disabled = true;
+          copyButton.style.color = 'grey';
+          copyButton.style.cursor = "not-allowed";
+          copyButton.style.opacity = "0.6";
+          copyButton.style.border = '1px solid grey';
+          copyButton.style.backgroundColor = 'transparent';
+          disabled = true;
+        
+          // Inserisci il link nell'editor
+          const linkHTML = `<a href="${element.url}" target="_blank">${element.title}</a>`;
+          editor.commands.insertContent(linkHTML);
+        
+          // Aggiungi una nuova riga sotto il link
+          editor.commands.insertContent('<p><br></p>'); // Usa un paragrafo vuoto per forzare il nuovo rigo
+        });
+  
+        listItem.appendChild(link);
+        listItem.appendChild(copyButton);
+        linksDiv.appendChild(listItem);
+  
+        return listItem;
+      });
+  
+      // Funzione per filtrare i risultati in base alla barra di ricerca
+      function filterResults() {
+        const query = searchBar.value.toLowerCase();
+        listItems.forEach(item => {
+          const title = item.querySelector('a').textContent.toLowerCase();
+          if (title.includes(query)) {
+            item.style.display = 'flex'; // Mostra l'elemento
+          } else {
+            item.style.display = 'none'; // Nascondi l'elemento
+          }
+        });
+      }
+  
+      // Aggiungi gli elementi alla finestra modale
+      modalContent.appendChild(searchBar);
+      modalContent.appendChild(linksDiv);
+      modal.appendChild(modalContent);
+      modalContainer.appendChild(modal);
+  
+      // Aggiungi la finestra modale al corpo del documento
+      document.body.appendChild(modalContainer);
+  
+      // Aggiungi l'evento di chiusura del modal se si fa clic fuori dal contenitore
+      modalContainer.addEventListener('click', (event) => {
+        // Verifica se il clic è fuori dal modal (non sul contenuto)
+        if (event.target === modalContainer) {
+          modalContainer.remove(); // Rimuovi il modal se il clic è fuori
+        }
+      });
+  
+    } catch (error) {
+      console.error('Errore nel caricare i dati:', error);
+    }
+  }
+  
+  
+
 
   const selectionControls = toolbar.querySelectorAll(".editor-toolbar-control[data-editor-selection-type]");
   const headingSelect = toolbar.querySelector(".editor-toolbar-control[data-editor-type='heading']");
