@@ -1,4 +1,4 @@
-class CreateSavedDatasetss < ActiveRecord::Migration[6.0]  # Cambia la versione se necessario
+class CreateSavedDatasets < ActiveRecord::Migration[6.0]  # Cambia la versione se necessario
   def change
     create_table :saved_datasets, id: :bigint do |t|  # Usa bigint per l'ID
       t.string :title, limit: 255  # Imposta un limite di 255 caratteri per il titolo
