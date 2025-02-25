@@ -1,0 +1,27 @@
+<form class="search-form" action="<%= url_for(controller: "idra", action: "index") %>" method="get">
+          <% search_value = params[:search].presence || session[:search_value].presence || "" %>
+          <input type="text" name="search" value="<%= search_value.presence%>">
+          <div class="dropdown-container">
+            <div class="content-on-left">
+              <div class="dropdown-pages">
+                <p style="color: black">Results:</p>
+                <%= select_tag "rows", options_for_select({ "5" => 5, "15" => 15, "25" => 25, "50" => 50 }, @rows) %>
+              </div>
+              <div class="dropdown-sort-by">
+                <p style="color: black">Sort by:</p>
+                <%= select_tag "field", options_for_select({ "Release date" => "releaseDate", "Updated" => "updateDate", "Catalogue" => "nodeID", "Title" => "title" }, @rows) %>
+              </div>
+            </div>
+            <input class="button content-on-right" type="submit" value="Submit">
+          </div>
+          <p <%= "hidden" if @search_value == '""'%> style="color:black; padding-bottom:20px"><%= @total_results %> results found.</p>
+        </form>
+        <% if @search_value === '""'%>
+          <div class="cloud">
+            <p>
+              <% @tags_values.each do |tag| %>
+                <span class="search-trigger" rel="nofollow"><%= tag["facet"] %></span>
+              <% end %>
+            </p>
+          </div>
+        <%end%>

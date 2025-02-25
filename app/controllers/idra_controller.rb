@@ -206,7 +206,7 @@ class IdraController < Decidim::ApplicationController
           @datasets = SavedDatasets.where(decidim_user: current_user)
         end
     
-        render partial: "shared/datasets_list"
+        render partial: "datasets_list"
       end
       
     
@@ -216,7 +216,7 @@ class IdraController < Decidim::ApplicationController
   
     if dataset.present? && dataset.destroy
       # Dataset successfully deleted
-      render partial: "shared/datasets_list"
+      render partial: "datasets_list"
     else
       # Handle error if dataset not found or couldn't be deleted
       render json: { error: 'Could not delete dataset' }, status: :unprocessable_entity
@@ -226,13 +226,13 @@ class IdraController < Decidim::ApplicationController
     
     def update
       @datasets = SavedDatasets.where(decidim_user: current_user)
-      render partial: "shared/datasets_list"
+      render partial: "datasets_list"
     end
   
   
     def modal_editor
       @datasets = SavedDatasets.where(decidim_user: current_user)
-      render partial: "shared/datasets_list"
+      render partial: "datasets_list"
     end
   
     def datasets

@@ -1,0 +1,66 @@
+ <div class="filter-box">
+          <% if @selected_filters.present? %>
+            <% @selected_filters.each do |obj| %>
+              <% obj.delete("") %>
+              <% obj.each do |filter| %>
+            <div class="filter-item">
+                  <% @tags_values.each do |tag| %>
+                    <% if tag.any? { |x| x.include?(filter) } %>
+                      <% if obj.last == filter %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ tags_value: [@tags_value.gsub(filter, "").chop].compact.join(",") })) %>
+                      <% else %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ tags_value: [@tags_value.gsub(filter +",", "").delete("")].compact.join(",") })) %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <% @formats_values.each do |fm| %>
+                    <% if fm.any? { |x| x.include?(filter) } %>
+                      <% if obj.last == filter %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
+                      <% else %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <% @licenses_values.each do |license| %>
+                    <% if license.any? { |x| x.include?(filter) } %>
+                      <% if obj.last == filter %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ licenses_value: [@licenses_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
+                      <% else %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ licenses_value: [@licenses_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <% @catalogues_values.each do |catalogue| %>
+                    <% if catalogue.any? { |x| x.include?(filter) } %>
+                      <% if obj.last == filter %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
+                      <% else %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <% @categories_values.each do |category| %>
+                    <% if category.any? { |x| x.include?(filter) } %>
+                      <% if obj.last == filter %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
+                      <% else %>
+                        <%= filter %>
+                        <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
