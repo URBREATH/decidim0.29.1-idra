@@ -1,4 +1,3 @@
-
 <form class="search-form" action="<%= url_for(controller: "idra", action: "index") %>" method="get">
           <% search_value = params[:search].presence || session[:search_value].presence || "" %>
           <input type="text" name="search" value="<%= search_value.presence%>">

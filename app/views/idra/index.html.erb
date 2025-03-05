@@ -234,7 +234,13 @@
   word-wrap: break-word; /* Evita che le parole troppo lunghe fuoriescano */
 }
 
-
+  .format-box {
+      border: 1px solid;
+      border-color: gray;
+      padding: 0px 10px 0px 10px;
+      color: gray;
+      border-radius: 10px;
+  }
 
 </style>
 <%= prepend_javascript_pack_tag 'datasets_list' %> <!-- Prima di application.js -->
@@ -434,6 +440,10 @@
       console.error('Error fetching partial view:', error);
     });
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/login_form_removed
 
 
 
