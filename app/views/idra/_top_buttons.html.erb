@@ -1,0 +1,31 @@
+ <div class="div-buttons" style=" width: 100%">
+                                    <div><%if current_user %><button id="openModalButton" class="button " style="padding: 0px;display:flex; align-items: center;width:3em;height:3em;background-color: transparent;" 
+                            onclick="openModal()"><span style="font-size:30px;">★</span>(<span id="count" ></span>)</button><%end%>
+                                    </div>
+                                    <div class="div-buttons">
+                                      <% if @start.to_i > 0 %>
+                                        <button class="button"><%= link_to "First Page", idra_path(request.query_parameters.merge(start: 0)), rel: "nofollow" %></button>
+                                      <% else %>
+                                        <button class="button" disabled>First Page</button>
+                                      <% end %>
+                                      <% if @start.to_i > 0 %>
+                                        <button class="button"><%= link_to "Previous", idra_path(request.query_parameters.merge(start: @start.to_i - @rows.to_i)), rel: "nofollow" %></button>
+                                      <% else %>
+                                        <button class="button" disabled>Previous</button>
+                                      <% end %>
+                                      <div style="color: var(--secondary); margin: 10px">
+                                        <% current_page = (@start.to_i / @rows.to_i) + 1 %>
+                                        <strong><%= current_page %></strong>
+                                      </div>
+                                      <% if @start.to_i + @rows.to_i < @total_results %>
+                                        <button class="button"><%= link_to "Next", idra_path(request.query_parameters.merge(start: @start.to_i + @rows.to_i)), rel: "nofollow" %></button>
+                                      <% else %>
+                                        <button class="button" disabled>Next</button>
+                                      <% end %>
+                                      <% if @rows.to_i > 0 && @total_results.to_i > 0 && @start.to_i < ((@total_results.to_i - 1) / @rows.to_i) * @rows.to_i %>
+                                        <button class="button"><%= link_to "Last Page", idra_path(request.query_parameters.merge(start: ((@total_results.to_i - 1) / @rows.to_i) * @rows.to_i)), rel: "nofollow" %></button>
+                                      <% else %>
+                                        <button class="button" disabled>Last Page</button>
+                                      <% end %>
+                                    </div>
+                                  </div>

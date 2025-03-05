@@ -1,0 +1,41 @@
+<%= render "decidim/shared/floating_help", id: "unique-id", content: <<-HTML.html_safe
+ <div>
+  <h2>In this section</h2>
+  <p>Users will be able to search datasets among different open data portals by entering keywords within the search field or selecting a tag from the keywords cloud.</p>
+
+  <p>Users can also search datasets by filtering by tag, format, or license, selecting them from the lists on the left side of the webpage. They can sort the results by date or name and select how many results they would like to view within the section.</p>
+
+  <p>Once results are shown, users can explore data by selecting a dataset from the results list. Each dataset will display the title, description of the resource, format, license, publication date, and other relevant information.</p>
+
+  <p>While discovering datasets, users can save one as a favorite or remove it easily by clicking the yellow star icon ( <span style="color: var(--warning); transform: scale(2); display: inline-block;">★</span> )
+ on the top-right of the selected dataset. The favorite datasets will never be lost; they will always be available within this section by selecting the yellow star icon.</p>
+
+  <p>After saving a dataset as a favorite, users will be able to reference it within a DECIDIM component (e.g., Blog, Proposal, etc.) or within a comment form afterward.</p>
+
+  <p>The favorite datasets can be easily referenced from:</p>
+  <ul>
+    <li>The admin dashboard panel, simply by selecting the same functionality ( <span style="color: var(--warning); transform: scale(2); display: inline-block;">★</span> 
+) from the top side of the body form; or,</li>
+    <li>From a comment form (only browsing mode).</li>
+  </ul>
+
+  <p>These capabilities will allow users to discuss topics or issues that the community is interested in and start the analysis supported by a data-evidence approach.</p>
+
+  <h2>Main functionalities:</h2>
+
+  <h3>Dataset Search and Discovery</h3>
+  <ul>
+    <li>Users can search for a dataset directly within the CoP suite interface using keywords, tags, categories, and other search criteria.</li>
+    <li>Users can access an overview of the results, including detailed information about the resource such as title, resource type, description, publication date, and authors.</li>
+    <li>Users can add or remove datasets from their favorite list.</li>
+  </ul>
+
+  <h3>Dataset Referencing</h3>
+  <ul>
+    <li>Users can reference saved datasets directly into the body of the proposal or blog post using a dedicated button in the CoP suite text editors.</li>
+    <li>Datasets and data can be used by users to support topic discussion and analysis within the platform, adopting a data-driven approach.</li>
+  </ul>
+</div>
+
+HTML
+%>

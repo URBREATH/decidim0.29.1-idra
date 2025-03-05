@@ -6,3 +6,30 @@
 // available at https://docs.decidim.org/en/develop/customize/styles.html#_tailwind_css
 //
 // By default this is empty.
+
+
+
+h1 {
+  font-weight: 500;
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}
+
+.home__section-title, .home__section-participate-grid__title, .title-decorator, .decorator{
+  color: var(--secondary) !important
+}
+
+.home__menu
+{
+  background-color: var(--secondary) !important;
+}
+
+.menu-bar__container
+{
+  background-color: var(--secondary) !important;
+}

@@ -1,0 +1,53 @@
+<% ["tags", "formats", "licenses", "catalogues", "categories"].each do |facet_type| %>
+  <% facet_values = instance_variable_get("@#{facet_type}_values") %>
+  <% facet_display_name = instance_variable_get("@#{facet_type}")["displayName"] rescue nil %>
+
+  <% if facet_values.present? %>
+    <div class="facets-card">
+      <% if facet_display_name.present? %>
+        <div class="card-title"><%= facet_display_name %></div>
+      <% end %>
+
+      <div class="card-body">
+        <% facet_values.each_with_index do |facet, index| %>
+          <div class="facet-item-<%= facet_type %> <%= "hidden" if index >= 10 %>">
+            <% unless @selected_filters.any? { |filter| filter.include?(facet["keyword"]) } %>
+              <%= link_to facet["facet"], url_for(request.parameters.merge({ "#{facet_type}_value".to_sym => [params["#{facet_type}_value".to_sym], facet["keyword"]].compact.join(",") })), rel: "nofollow" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="show-more-button">
+        <br>
+        <a id="showMore<%= facet_type.capitalize %>Btn" style="cursor: pointer;" <%= "hidden" if facet_values.size <= 10 %>>Show all results (<%= facet_values.size %>)</a>
+        <span <%= "hidden" if facet_values.size > 0 %>>No results</span>
+      </div>
+    </div>
+
+    <br>
+  <% end %>
+<% end %>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".show-more-button a").forEach(function (button) {
+    button.addEventListener("click", function () {
+      let facetType = this.id.replace("showMore", "").replace("Btn", "").toLowerCase();
+      let allItems = Array.from(document.querySelectorAll(".facet-item-" + facetType));
+      let hiddenItems = allItems.filter(item => item.classList.contains("hidden"));
+      let isExpanded = hiddenItems.length === 0;
+
+      if (isExpanded) {
+        allItems.forEach((item, index) => {
+          item.classList.toggle("hidden", index >= 10);
+        });
+      } else {
+        allItems.forEach(item => item.classList.remove("hidden"));
+      }
+
+      this.textContent = isExpanded ? `Show all results (${allItems.length})` : "Show less";
+    });
+  });
+});
+</script>

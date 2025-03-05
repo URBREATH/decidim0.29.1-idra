@@ -16,11 +16,6 @@ document.addEventListener("DOMContentLoaded", function() {
       } else {
           console.error("Elemento '.modal-overlay' non trovato.");
       }
-      if (window.refreshPage) {
-          window.refreshPage();
-      } else {
-          console.error("refreshPage non è definito");
-      }
   }
   
   var openModalButton = document.getElementById("openModalButton");
@@ -69,6 +64,8 @@ document.addEventListener("DOMContentLoaded", function() {
   
     function deleteDataset(id) {
       var deleted = 0;
+      var counterText = document.getElementById("count");
+      var button = document.getElementById('buttonId-' + id);
       if (confirm("Are you sure you want to delete this dataset?")) {
         fetch('/idra_delete', {
           method: 'POST',
@@ -81,7 +78,11 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => {
           if (response.ok) {
             updatePartialView(); // Assicurati che questa funzione sia definita
+            button.setAttribute('data-star', '0');
+            button.innerHTML = "☆"; // Set the button content to "☆"
+            button.style.color = ""; // Reset button text color
             counter--; // Assicurati che counter sia definito
+            counterText.innerHTML = counter;
             var deleteEvent = new CustomEvent('datasetDeleted', { detail: { deleted: deleted } });
             document.dispatchEvent(deleteEvent);
             closeModalIfEmpty(true);

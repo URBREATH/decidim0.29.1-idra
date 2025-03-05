@@ -1,684 +1,400 @@
 <style>
-  .container{
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .container {
+      max-width:85%;
+      padding: 0;
   }
 
-  .dropdown-container{
-    display: flex;
-    vertical-align:baseline;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .dropdown-sort-by{
-     text-align: left;
-  }
-
-  .content-on-left{
-    display: flex;
-    justify-content: flex-start;
-    gap: 50px;
-    width:100%;
-    vertical-align: baseline;
-  }
-
-  .content-on-right{
-     display: flex;
-     justify-content: flex-end;
-     vertical-align: baseline;
-     height: 40px;
-     margin-top: 40px;
-  }
 
   .search-form {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: rgba(var(--secondary-rgb), 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 20px;
-    height: 200px;
-    width: 100%;
-    padding: 40px;
-    border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background-color: rgba(var(--secondary-rgb), 0.1);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 20px;
+      border-radius: 5px;
   }
+
+
+
+  .dropdown-container {
+      display: flex;
+      vertical-align: baseline;
+      justify-content: space-between;
+      width: 100%;
+  }
+
+  .dropdown-sort-by {
+      text-align: left;
+  }
+
 
   .search-form input[type="text"] {
-    padding: 10px;
-    border: 1px solid white;
-    border-radius: 5px;
-    color: black;
-    width: 100%;
-    margin-top: 40px;
+      padding: 10px;
+      border: 1px solid white;
+      border-radius: 5px;
+      color: black;
+      width: 100%;
+      margin-top: 10px;
   }
 
-  .search-form input[type="submit"] {
-    margin-left: 10px;
-    cursor: pointer;
+
+  .content-on-left {
+      display: flex;
+      justify-content: flex-start;
+      gap: 50px;
+      width: 100%;
+      vertical-align: baseline;
+      margin-top: 1rem;
+  }
+
+  .submit-button {
+      display: flex;
+      background-color: var(--secondary-rgb);
+      justify-content: flex-end;
+      vertical-align: baseline;
+      margin-top: 2rem;
+      padding: 0 10px;
+      cursor: pointer;
+      height: 2.5rem;
   }
 
   .row-body {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 1400px;
-    margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
   }
 
-  /* Column Styles */
   .col-left {
-    flex: 1;
-    margin-right:40px;
-    padding: 0px;
-    margin-left: 0px;
+      flex: 1;
+      margin-right: 40px;
+      padding: 0px;
+      margin-left: 0px;
   }
 
   .col-right {
-    flex: 3;
-    width: 100%; /* Adjust the width to take full container width */
-
+      flex: 3;
+      width: 80%;
   }
 
-  .div-buttons{
-
-     display:flex;
-     justify-content: space-between;
-     gap: 2px;
-
+  .div-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 2px;
   }
 
-   .div-buttons-bottom{
-
-     display:flex;
-     justify-content: flex-end;
-     gap: 2px;
-
+  .div-buttons > button, .div-buttons-bottom > button {
+      display: flex;
+      justify-content: space-between;
+      gap: 2px;
+      padding: 0 10px;
   }
 
-   .facets-card {
-
-        border-radius: 5px;
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        color: black;
+  .div-buttons-bottom {
+      display: flex;
+      justify-content: flex-end;
+      gap: 2px;
   }
 
-   .card-title{
-        background-color: #1a181d;
-        color:white;
-        width: 100%;
-        border-radius: 5px 5px 0px 0px;
+  .facets-card {
+      border-radius: 5px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      color: black;
+      padding-bottom: 10px;
   }
 
+  .card-title {
+      background-color: var(--secondary);
+      color: white;
+      width: 100%;
+      border-radius: 5px 5px 0px 0px;
+      padding: 10px 0;
+  }
 
-   .card-body{
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        margin-left: 20px;
-        margin-top: 10px;
-   }
+  .card-body {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      margin-left: 20px;
+      margin-top: 10px;
+  }
 
   .card-body .hidden {
-   display: none;
+      display: none;
   }
 
-  .results-card{
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        margin-bottom: 5px;
-        width: 100%;
-    }
+  .results-card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      margin-top: 10px;
+      width: 100%;
+  }
 
-   .results-card-title a{
-    color: var(--primary);
-   }
+  .results-card-title a {
+      color: var(--primary);
+  }
 
-   .results-card-body{
-    color: grey;
-   }
+  .results-card-body {
+      color: grey;
+      margin-top: 1em;
+  }
 
-   .filter-box{
-     display:flex;
-     align-items: center;
-     margin-top:20px;
-     max-width: 1200px;
-   }
+  .filter-box {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      max-width: 1200px;
+  }
 
-   .filter-item{
-     margin-right: 5px;
-     background: var(--secondary);
-     color: white;
-     padding: 5px 10px 5px 20px;
-     border-radius: 15px;
-     height: 40px;
-   }
+  .filter-item {
+      margin-right: 5px;
+      background: var(--secondary);
+      color: white;
+      padding: 5px 10px 5px 20px;
+      border-radius: 15px;
+      height: 40px;
+  }
 
-   .filter-item:hover{
-     transform: scale(1.05)
-   }
+  .filter-item:hover {
+      transform: scale(1.05);
+  }
 
-   .filter-item a{
-     font-size: 20px;
-     color: white;
-     text-decoration: none;
-     border-radius:5px;
-     padding: 0px 8px 2px 8px;
-     background-color:transparent;
-   }
+  .filter-item a {
+      font-size: 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      padding: 0px 8px 2px 8px;
+      background-color: transparent;
+  }
 
-   .filter-item a:hover{
-     color: var(--primary)
-   }
+  .filter-item a:hover {
+      color: var(--primary);
+  }
 
-   .format-container{
-     display: flex;
-     gap: 10px;
-     margin-top:40px;
-   }
+  .format-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+      overflow-wrap: normal;
+  }
 
-   .tag-container {
+  .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+      flex-direction: row;
+  }
+
+  .format-box {
+      border: 1px solid;
+      border-color: gray;
+      padding: 0px 10px 2px 10px;
+      color: gray;
+      border-radius: 10px;
+  }
+
+  .truncated-content p {
+      margin: 0px;
+  }
+
+  .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+  }
+
+  #openModalButton:hover {
+      transform: scale(1.05, 1.05);
+  }
+
+  .cloud {
+      padding-top: 20px;
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+  }
+
+  .cloud span {
+      cursor: pointer;
+  }
+
+  .additional-info-container {
   display: flex;
-  flex-wrap: wrap; 
-  gap: 10px;
-  margin-top: 40px;
-  flex-direction: row; 
+  flex-direction: column;
+  gap: 10px; /* Distanza tra gli elementi */
+}
+
+.additional-info-container span {
+  display: block; /* Ogni elemento occupa una riga */
+  word-wrap: break-word; /* Evita che le parole troppo lunghe fuoriescano */
 }
 
 
-   .format-box{
-     border: 1px solid;
-     border-color: gray;
-     padding:0px 10px 0px 10px;
-     color: gray;
-     border-radius:10px;
 
-   }
-
-   .truncated-content p{
-     margin:0px;
-   }
-
-
-   
-
-  /* Styles for the close button */
-  .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  }
-
-
-  openModalButton:hover{
-    transform:scale(1.05,1.05)
-  }
-
-
-
-  .cloud {
-  padding-top: 60px;
-  width: 100%;
-  text-align: center;
-  line-height: 1 /* Adjust this value to reduce or increase space between lines */
-  }
-
-  .cloud span{
-  cursor: pointer;
-  }
-  
 </style>
-
-
-<div class="wrapper">
-
-<%= prepend_javascript_pack_tag 'datasets_list' %>   <!-- Prima di application.js -->
-
-
+<%= prepend_javascript_pack_tag 'datasets_list' %> <!-- Prima di application.js -->
 <script>
   window.savedDatasets = <%= raw @datasets.as_json.to_json %>;
 </script>
-
-
-
-
-<div class="container">
+<div class="container mt-4">
+  <!-- Modal Saved Datasets -->
   <div class="modal-overlay">
     <div class="modal">
       <div id="partial-view-container">
-        <%= render partial: "shared/datasets_list" %>
+        <%= render partial: "datasets_list" %>
       </div>
       <span class="close" id="closeModal">&times;</span>
     </div>
   </div>
+  <!-- Help section -->
+  <%= render partial: "help_section" %>
   <!-- Search form -->
-  
-  <div style="width:100%">
-  <%= render "decidim/shared/floating_help", id: "unique-id", content: <<-HTML.html_safe
- <div>
-  <h2>In this section</h2>
-  <p>Users will be able to search datasets among different open data portals by entering keywords within the search field or selecting a tag from the keywords cloud.</p>
-
-  <p>Users can also search datasets by filtering by tag, format, or license, selecting them from the lists on the left side of the webpage. They can sort the results by date or name and select how many results they would like to view within the section.</p>
-
-  <p>Once results are shown, users can explore data by selecting a dataset from the results list. Each dataset will display the title, description of the resource, format, license, publication date, and other relevant information.</p>
-
-  <p>While discovering datasets, users can save one as a favorite or remove it easily by clicking the yellow star icon ( <span style="color: var(--warning); transform: scale(2); display: inline-block;">★</span> )
- on the top-right of the selected dataset. The favorite datasets will never be lost; they will always be available within this section by selecting the yellow star icon.</p>
-
-  <p>After saving a dataset as a favorite, users will be able to reference it within a DECIDIM component (e.g., Blog, Proposal, etc.) or within a comment form afterward.</p>
-
-  <p>The favorite datasets can be easily referenced from:</p>
-  <ul>
-    <li>The admin dashboard panel, simply by selecting the same functionality ( <span style="color: var(--warning); transform: scale(2); display: inline-block;">★</span> 
-) from the top side of the body form; or,</li>
-    <li>From a comment form (only browsing mode).</li>
-  </ul>
-
-  <p>These capabilities will allow users to discuss topics or issues that the community is interested in and start the analysis supported by a data-evidence approach.</p>
-
-  <h2>Main functionalities:</h2>
-
-  <h3>Dataset Search and Discovery</h3>
-  <ul>
-    <li>Users can search for a dataset directly within the CoP suite interface using keywords, tags, categories, and other search criteria.</li>
-    <li>Users can access an overview of the results, including detailed information about the resource such as title, resource type, description, publication date, and authors.</li>
-    <li>Users can add or remove datasets from their favorite list.</li>
-  </ul>
-
-  <h3>Dataset Referencing</h3>
-  <ul>
-    <li>Users can reference saved datasets directly into the body of the proposal or blog post using a dedicated button in the CoP suite text editors.</li>
-    <li>Datasets and data can be used by users to support topic discussion and analysis within the platform, adopting a data-driven approach.</li>
-  </ul>
+  <%= render partial: "search_form" %>
+  <!-- Filters -->
+  <%= render partial: "filters" %>
+  <div class="row-body">
+    <!-- Left column -->
+    <div class="col col-left" <%= "hidden" if @search_value === '""' %>>
+    <%= render partial: "facets" %>
+    </div>
+    <!-- Right Column -->
+    <div class="col col-right" <%= "hidden" if @search_value === '""' %>>
+    <!-- Buttons on top -->
+    <%= render partial: "top_buttons" %>
+    <!-- Search Results -->
+    <%= render partial: "search_results" %>
+    <!-- Buttons on bottom -->
+    <%= render partial: "buttons_bottom" %>
+  </div>
 </div>
 
-HTML
-%>
 
-  <div>
-  
-  <form class="search-form" action="<%= url_for(controller: "idra", action: "index") %>" method="get">
-    <% search_value = params[:search].presence || session[:search_value].presence || "" %>
-    <input type="text" name="search" value="<%= search_value.presence%>">
-    <div class="dropdown-container">
-      <div class="content-on-left">
-        <div class="dropdown-pages">
-          <p style="color: black">Results:</p>
-          <%= select_tag "rows", options_for_select({ "5" => 5, "15" => 15, "25" => 25, "50" => 50 }, @rows) %>
-        </div>
-        <div class="dropdown-sort-by">
-          <p style="color: black">Sort by:</p>
-          <%= select_tag "field", options_for_select({ "Release date" => "releaseDate", "Updated" => "updateDate", "Catalogue" => "nodeID", "Title" => "title" }, @rows) %>
-        </div>
-      </div>
-      <input class="button content-on-right" type="submit" value="Submit">
-    </div>
-    <p <%= "hidden" if @search_value == '""'%> style="color:black; padding-bottom:20px"><%= @total_results %> results found.</p>
-  </form>
-  <% if @search_value === '""'%>
-    <div class="cloud">
-      <p>
-        <% @tags_values.each do |tag| %>
-          <span class="search-trigger" rel="nofollow"><%= tag["facet"] %></span>
-        <% end %>
-      </p>
-    </div>
-  <%end%>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var searchTriggers = document.querySelectorAll('.search-trigger');
+<script>
+ 
 
-      searchTriggers.forEach(function(trigger) {
-        trigger.addEventListener('click', function() {
-          var searchValue = this.textContent.trim(); // Ottieni il testo dello span cliccato
 
-          // Imposta il valore dell'input di ricerca
-          var searchInput = document.querySelector('input[name="search"]');
-          if (searchInput) {
-            searchInput.value = searchValue;
+   // + button show div
 
-            // Invia il modulo
-            var searchForm = document.querySelector('.search-form');
-            if (searchForm) {
-              searchForm.submit();
-            }
+
+     document.addEventListener("DOMContentLoaded", function() {
+     const showMoreButtons = document.querySelectorAll(".show-more-details-button");
+
+     showMoreButtons.forEach(button => {
+       button.addEventListener("click", function() {
+         const card = button.closest(".results-card");
+         const targetId = button.getAttribute("data-target");
+         const detailsDiv = card.querySelector("#" + targetId);
+
+         if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
+           detailsDiv.style.display = "block";
+           button.textContent = "-";
+         } else {
+           detailsDiv.style.display = "none";
+           button.textContent = "+";
+         }
+       });
+     });
+   });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var searchTriggers = document.querySelectorAll('.search-trigger');
+
+    searchTriggers.forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var searchValue = this.textContent.trim(); // Ottieni il testo dello span cliccato
+
+        // Imposta il valore dell'input di ricerca
+        var searchInput = document.querySelector('input[name="search"]');
+        if (searchInput) {
+          searchInput.value = searchValue;
+
+          // Invia il modulo
+          var searchForm = document.querySelector('.search-form');
+          if (searchForm) {
+            searchForm.submit();
           }
-        });
+        }
       });
     });
-  </script>
-  <script>
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
+  });
+</script>
+<script>
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
+  }
 
-    var spans = document.querySelectorAll('.cloud span');
-    var colors = ['--primary', '--secondary', '--warning'];
+  var spans = document.querySelectorAll('.cloud span');
+  var colors = ['--primary', '--secondary', '--warning'];
 
-    spans.forEach(function(span, index) {
-      var colorIndex = index % colors.length;
-      var colorVariable = colors[colorIndex];
-      span.style.color = `var(${colorVariable})`;
+  spans.forEach(function(span, index) {
+    var colorIndex = index % colors.length;
+    var colorVariable = colors[colorIndex];
+    span.style.color = `var(${colorVariable})`;
 
-      var text = span.textContent.trim();
-      var number = text.match(/\(\d+\)/);
+    var text = span.textContent.trim();
+    var number = text.match(/\(\d+\)/);
 
-      if (number !== null) {
-        var newText = text.replace(number[0], '').replace(/\(|\)/g, '').trim();
-        span.textContent = newText + " " + " ";
+    if (number !== null) {
+      var newText = text.replace(number[0], '').replace(/\(|\)/g, '').trim();
+      span.textContent = newText + " " + " ";
 
-        var weight = parseInt(number[0].replace(/\(|\)/g, ''));
-        var fontSize = weight
+      var weight = parseInt(number[0].replace(/\(|\)/g, ''));
+      var fontSize = weight
 
-        fontSize = Math.min(Math.max(fontSize, 15), 80);
+      fontSize = Math.min(Math.max(fontSize, 15), 80);
 
-        span.style.fontSize = fontSize + 'px';
-      }
-    });
-
-    function highlightSpan() {
-      // Ottieni il colore corrente in formato RGB
-      var currentColor = getComputedStyle(this).color;
-
-      // Estrai i valori di rosso, verde e blu dal colore RGB
-      var rgbValues = currentColor.match(/\d+/g);
-      var red = rgbValues[0];
-      var green = rgbValues[1];
-      var blue = rgbValues[2];
-
-      // Imposta il colore con un'opacità del 50%
-      var rgbaColor = 'rgba(' + red + ', ' + green + ', ' + blue + ', 0.3)';
-
-      // Imposta il colore di sfondo con trasparenza
-      this.style.backgroundColor = rgbaColor;
+      span.style.fontSize = fontSize + 'px';
     }
+  });
+
+  function highlightSpan() {
+    // Ottieni il colore corrente in formato RGB
+    var currentColor = getComputedStyle(this).color;
+
+    // Estrai i valori di rosso, verde e blu dal colore RGB
+    var rgbValues = currentColor.match(/\d+/g);
+    var red = rgbValues[0];
+    var green = rgbValues[1];
+    var blue = rgbValues[2];
+
+    // Imposta il colore con un'opacità del 50%
+    var rgbaColor = 'rgba(' + red + ', ' + green + ', ' + blue + ', 0.3)';
+
+    // Imposta il colore di sfondo con trasparenza
+    this.style.backgroundColor = rgbaColor;
+  }
 
 
-    // Funzione per gestire l'evento mouseleave
-    function resetHighlight() {
-      this.style.backgroundColor = ''; // Ripristina il colore di sfondo predefinito
-    }
+  // Funzione per gestire l'evento mouseleave
+  function resetHighlight() {
+    this.style.backgroundColor = ''; // Ripristina il colore di sfondo predefinito
+  }
 
-    // Aggiungi eventi mouseenter e mouseleave a ciascuno span
-    spans.forEach(function (span) {
-      span.addEventListener('mouseenter', highlightSpan);
-      span.addEventListener('mouseleave', resetHighlight);
-    });
+  // Aggiungi eventi mouseenter e mouseleave a ciascuno span
+  spans.forEach(function (span) {
+    span.addEventListener('mouseenter', highlightSpan);
+    span.addEventListener('mouseleave', resetHighlight);
+  });
 
-    var shuffledSpans = shuffle(Array.from(spans));
+  var shuffledSpans = shuffle(Array.from(spans));
 
-    var parentContainer = document.querySelector('.cloud');
-    parentContainer.innerHTML = '';
+  var parentContainer = document.querySelector('.cloud');
+  parentContainer.innerHTML = '';
 
-    shuffledSpans.forEach(function(span) {
-      parentContainer.appendChild(span);
-    });
-  </script>
-  <!-- Filters -->
-  <div class="filter-box">
-    <% if @selected_filters.present? %>
-      <% @selected_filters.each do |obj| %>
-        <% obj.delete("") %>
-        <% obj.each do |filter| %>
-          <div class="filter-item">
-            <% @tags_values.each do |tag| %>
-              <% if tag.any? { |x| x.include?(filter) } %>
-                <% if obj.last == filter %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ tags_value: [@tags_value.gsub(filter, "").chop].compact.join(",") })) %>
-                <% else %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ tags_value: [@tags_value.gsub(filter +",", "").delete("")].compact.join(",") })) %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% @formats_values.each do |fm| %>
-              <% if fm.any? { |x| x.include?(filter) } %>
-                <% if obj.last == filter %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
-                <% else %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% @licenses_values.each do |license| %>
-              <% if license.any? { |x| x.include?(filter) } %>
-                <% if obj.last == filter %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ licenses_value: [@licenses_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
-                <% else %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ licenses_value: [@licenses_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% @catalogues_values.each do |catalogue| %>
-              <% if catalogue.any? { |x| x.include?(filter) } %>
-                <% if obj.last == filter %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
-                <% else %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% @categories_values.each do |category| %>
-              <% if category.any? { |x| x.include?(filter) } %>
-                <% if obj.last == filter %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +"", "").chop].compact.join(",") })), rel: "nofollow" %>
-                <% else %>
-                  <%= filter %>
-                  <%= link_to "x", url_for(request.parameters.merge({ formats_value: [@formats_value.gsub(filter +",", "").delete("")].compact.join(",") })), rel: "nofollow" %>
-                <% end %>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="row-body">
-    <!-- Left cards column -->
-    <div <%= "hidden" if @search_value == '""' %> class="col col-left">
-      <!-- Start card -->
-      <div class="facets-card">
-        <div class="card-title"><%= @tags["displayName"] %></div>
-        <div class="card-body">
-          <% @tags_values.each_with_index do |tag, index| %>
-            <div class="facet-item-tags <%= "hidden" if index >= 10 %>">
-              <% if @selected_filters.size > 0 %>
-                <% unless @selected_filters.any? { |filter| filter.include?(tag["keyword"]) } %>
-                  <%= link_to tag["facet"], url_for(request.parameters.merge({ tags_value: [params[:tags_value], tag["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                <% end %>
-              <% else %>
-                <%= link_to tag["facet"], url_for(request.parameters.merge({ tags_value: [params[:tags_value], tag["keyword"]].compact.join(",") })), rel: "nofollow" %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-        <div class="show-more-button">
-          <br>
-          <a <%= "hidden" if @tags_values.size <= 10 %> id="showMoreTagsBtn">Show all results</a>
-          <span  <%= "hidden" if @tags_values.size > 0 %>>No results</span>
-       </div>
-     </div>
-
-     <br>
-
-       <!-- Start card -->
-
-       <div class="facets-card">
-       <div class="card-title"><%= @formats["displayName"] %></div>
-            <div class="card-body">
-              <% @formats_values.each_with_index do |fm, index| %>
-                <div class="facet-item-formats <%= "hidden" if index >= 10 %>">
-                  <% if @selected_filters.size > 0 %>
-                    <% unless @selected_filters.any? { |filter| filter.include?(fm["keyword"]) } %>
-                      <%= link_to fm["facet"], url_for(request.parameters.merge({ formats_value: [params[:formats_value], fm["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                    <% end %>
-                  <% else %>
-                    <%= link_to fm["facet"], url_for(request.parameters.merge({ formats_value: [params[:formats_value], fm["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-            <div class="show-more-button">
-              <br>
-              <a <%= "hidden" if @formats_values.size <= 10 %> id="showMoreFormatsBtn">Show all results</a>
-              <span  <%= "hidden" if @formats_values.size > 0 %>>No results</span>
-       </div>
-     </div>
-
-     <br>
-
-       <!-- Start card -->
-
-       <div class="facets-card">
-       <div class="card-title"><%= @licenses["displayName"] %></div>
-                <div class="card-body">
-                  <% @licenses_values.each_with_index do |license, index| %>
-                    <div class="facet-item-licenses <%= "hidden" if index >= 10 %>">
-                      <% if @selected_filters.size > 0 %>
-                        <% unless @selected_filters.any? { |filter| filter.include?(license["keyword"]) } %>
-                          <%= link_to license["facet"], url_for(request.parameters.merge({ licenses_value: [params[:licenses_value], license["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                        <% end %>
-                      <% else %>
-                        <%= link_to license["facet"], url_for(request.parameters.merge({ licenses_value: [params[:licenses_value], license["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-                <div class="show-more-button">
-                  <br>
-                  <a <%= "hidden" if @licenses_values.size <= 10 %> id="showMoreLicensesBtn">Show all results</a>
-                  <span  <%= "hidden" if @licenses_values.size > 0 %>>No results</span>
-       </div>
-     </div>
-
-     <br>
-
-       <!-- Start card -->
-
-       <div class="facets-card">
-       <div class="card-title"><%= @catalogues["displayName"] %></div>
-                    <div class="card-body">
-                      <% @catalogues_values.each_with_index do |catalogue, index| %>
-                        <div class="facet-item-catalogues <%= "hidden" if index >= 10 %>">
-                          <% if @selected_filters.size > 0 %>
-                            <% unless @selected_filters.any? { |filter| filter.include?(catalogue["keyword"]) } %>
-                              <%= link_to catalogue["facet"], url_for(request.parameters.merge({ catalogues_value: [params[:catalogues_value], catalogue["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                            <% end %>
-                          <% else %>
-                            <%= link_to catalogue["facet"], url_for(request.parameters.merge({ catalogues_value: [params[:catalogues_value], catalogue["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div>
-                    <div class="show-more-button">
-                      <br>
-                      <a <%= "hidden" if @catalogues_values.size <= 10 %> id="showMoreCataloguesBtn">Show all results</a>
-                      <span <%= "hidden" if @catalogues_values.size > 0 %>>No results</span>
-       </div>
-     </div>
-
-     <br>
-
-
-       <!-- Start card -->
-
-       <div class="facets-card">
-       <div class="card-title"><%= @categories["displayName"] %></div>
-                        <div class="card-body">
-                          <% @categories_values.each_with_index do |category, index| %>
-                            <div class="facet-item-categories" <%= "hidden" if index >= 10 %>>
-                              <% if @selected_filters.size > 0 %>
-                                <% unless @selected_filters.any? { |filter| filter.include?(category["keyword"]) } %>
-                                  <%= link_to category["facet"], url_for(request.parameters.merge({ categories_value: [params[:categories_value], category["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                                <% end %>
-                              <% else %>
-                                <%= link_to category["facet"], url_for(request.parameters.merge({ categories_value: [params[:categories_value], category["keyword"]].compact.join(",") })), rel: "nofollow" %>
-                              <% end %>
-                            </div>
-                          <% end %>
-                        </div>
-                        <div class="show-more-button">
-                          <br>
-                          <a id="showMoreCategoriesBtn" <%= "hidden" if @categories_values.size <= 10 %>>Show all results</a>
-          <span <%= "hidden" if @categories_values.size > 0 %>>No results</span>
-       </div>
-        
-     </div>
-
-     <br>
-
-   </div>
-
-
-  <!-- Buttons on top -->
-   <div <%= "hidden" if @search_value == '""' %> class="col col-right">
-                            <div class="div-buttons" style=" width: 100%">
-                              <div><%if current_user %><button id="openModalButton" class="button" style="padding: 0px;display:flex; align-items: center;width:3em;height:3em;color:var(--warning);background-color: transparent;" 
-                            onclick="openModal()"><span style="font-size:30px">★</span>(<span id="count"></span>)</button><%end%>
-                              </div>
-                              <div class="div-buttons">
-                                <% if @start.to_i > 0 %>
-                                  <button class="button"><%= link_to "First Page", idra_path(request.query_parameters.merge(start: 0)), rel: "nofollow" %></button>
-                                <% else %>
-                                  <button class="button" disabled>First Page</button>
-                                <% end %>
-                                <% if @start.to_i > 0 %>
-                                  <button class="button"><%= link_to "Previous", idra_path(request.query_parameters.merge(start: @start.to_i - @rows.to_i)), rel: "nofollow" %></button>
-                                <% else %>
-                                  <button class="button" disabled>Previous</button>
-                                <% end %>
-                                <div style="color: var(--secondary); margin: 10px">
-                                  <% current_page = (@start.to_i / @rows.to_i) + 1 %>
-                                  <strong><%= current_page %></strong>
-                                </div>
-                                <% if @start.to_i + @rows.to_i < @total_results %>
-                                  <button class="button"><%= link_to "Next", idra_path(request.query_parameters.merge(start: @start.to_i + @rows.to_i)), rel: "nofollow" %></button>
-                                <% else %>
-                                  <button class="button" disabled>Next</button>
-                                <% end %>
-                                <% if @rows.to_i > 0 && @total_results.to_i > 0 && @start.to_i < ((@total_results.to_i - 1) / @rows.to_i) * @rows.to_i %>
-                                  <button class="button"><%= link_to "Last Page", idra_path(request.query_parameters.merge(start: ((@total_results.to_i - 1) / @rows.to_i) * @rows.to_i)), rel: "nofollow" %></button>
-                                <% else %>
-                                  <button class="button" disabled>Last Page</button>
-                                <% end %>
-                              </div>
-                            </div>
-                            <!-- Column on Right (Results) -->
-                             
-                            <% @api_results["results"].each_with_index do |result, index| %>
-                              <div class="results-card">
-                                <div class="results-card-title">
-                                  <div style="display: flex;  align-items: baseline; justify-content: space-between">
-                                    <h4><a><%= result["title"] %></a></h4>
-                                    <!-- Save dataset -->
-                                    <% if current_user %>
-<button id='buttonId-<%= result["id"] %>' class="bg-transparent" style="cursor: pointer; transform: scale(1.5,1.5)" 
-  onclick="toggleStarAndSaveTitle('<%= result['title'] %>', '<%= result["id"] %>', '<%= result['landingPage'] %>');
-  " data-star="<% if @list.include?(result["id"]) %>1<% else %>0<% end %>">
-  <% if @list.include?(result["id"]) %>
-  <span style="color: var(--warning)">★</span>
-  <% else %>☆<% end %>
-</button>
-<% end %>
-</div>
+  shuffledSpans.forEach(function(span) {
+    parentContainer.appendChild(span);
+  });
+</script>
 <script type="text/javascript">
   var counter = '<%= @element_count %>';
   var counterText = document.getElementById("count");
@@ -694,18 +410,9 @@ HTML
     var counterText = document.getElementById("count");
 
     if (isStar === '1') {
-      button.setAttribute('data-star', '0');
-      button.innerHTML = "☆"; // Set the button content to "☆"
-      button.style.color = ""; // Reset button text color
-      counter--;
-      counterText.innerHTML = counter;
-      deleteTitle(buttonId); // Call delete function
+      deleteTitle(buttonId, button, counterText); // Call delete function
     } else {
-      button.setAttribute('data-star', '1');
-      button.innerHTML = "<span style='color: var(--warning)'>★</span>"; // Set the button content to "★"
-      counter++;
-      counterText.innerHTML = counter;
-      saveTitle(title, buttonId, url); // Call save function
+      saveTitle(title, buttonId, url, button, counterText); // Call save function
     }
   }
 
@@ -726,12 +433,13 @@ HTML
     .catch(error => {
       console.error('Error fetching partial view:', error);
     });
-}
+  }
 
 
-   
 
-  function saveTitle(title, buttonId, url) {
+
+  function saveTitle(title, buttonId, url, button, counterText) {
+    button.disabled = true; // Disable the button to prevent multiple clicks
     fetch('/idra_create', {
       method: 'POST',
       headers: {
@@ -742,17 +450,29 @@ HTML
     })
     .then(response => {
       if (response.ok) {
+      button.setAttribute('data-star', '1');
+      button.innerHTML = "<span style='color: var(--warning)'>★</span>"; // Set the button content to "★"
+      button.disabled = false; // Re-enable the button
+      counter++;
+      counterText.innerHTML = counter;
         updatePartialView()
       } else {
         // Handle errors if needed
+        console.error('Failed to save dataset:', response.status, response.statusText);
+        button.disabled = false; // Re-enable the button if there was an error
+        alert('Failed to save dataset. Please try again.');
       }
     })
     .catch(error => {
       // Handle errors if needed
+      console.error('Error saving dataset:', error);
+      button.disabled = false; // Re-enable the button if there was an error
+      alert('An error occurred. Please try again.');
     });
   }
 
-  function deleteTitle(buttonId) {
+  function deleteTitle(buttonId, button, counterText) {
+    button.disabled = true; // Disable the button to prevent multiple clicks
     fetch('/idra_delete', {
       method: 'POST',
       headers: {
@@ -763,266 +483,24 @@ HTML
     })
     .then(response => {
       if (response.ok) {
+
+      button.setAttribute('data-star', '0');
+      button.innerHTML = "☆"; // Set the button content to "☆"
+      button.style.color = ""; // Reset button text color
+      button.disabled = false; // Re-enable the button
+      counter--;
+      counterText.innerHTML = counter;
         updatePartialView()
-      } else {
-        // Handle errors if needed
+      }else {
+        console.error('Failed to delete dataset:', response.status, response.statusText);
+        button.disabled = false; // Re-enable the button if there was an error
+        alert('Failed to delete item. Please try again.');
       }
     })
     .catch(error => {
-      // Handle errors if needed
+      console.error('Error deleting dataset:', error);
+      button.disabled = false; // Re-enable the button if there was an error
+      alert('An error occurred. Please try again.');
     });
   }
-
-
-                                  
-
-
-                              
-                                          
-                                  </script>
-                                </div>
-                                <div class="results-card-body">
-                                  <div class="truncated-content">
-                                    <%= truncate_html(result["description"], length: 300) %>
-                                  </div>
-                                  <div class="full-content" style="display: none;", id="full-content-<%= index %>">
-                                    <%= result["description"].html_safe %>
-                                    <div class="column" style="width: 100%; margin: 0px; padding:20px 0px 50px 0px">
-                                      <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                      <div style="width: 100%" class="row">
-                                        <p style="font-weight: bold">Tags</p>
-                                        <div class="tag-container" style="margin-bottom: 20px; margin-top: 0px">
-                                          <% result["keywords"].each_with_index do |obj, index| %>
-                                            <div class="format-box"><%= obj %></div>
-                                          <% end %>
-                                        </div>
-                                      </div>
-                                      <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                      <div class="row">
-                                        <p style="font-weight: bold">Resources</p>
-                                        <% result["distributions"].each_with_index do |obj, index| %>
-                                          <div class="row" style="display:flex; flex-direction: rows; margin: 20px;">
-                                            <div class="column"><%= obj["format"] %></div>
-                                            <div class="column"><%= obj["title"] %></div>
-                                            <% if obj["description"].size > 0 %>
-                                              <div class="column"><%= obj["description"] %></div>
-                                            <% else %>
-                                              <div class="column"> No description available </div>
-                                            <% end %>
-                                            <div class="column">
-                                              <button class="button show-more-details-button" style="margin:0px; padding:10px" data-target="show-more-details-<%= index %>">+</button>
-                                              <%= link_to "Download", obj["downloadURL"], class: "button", style: "margin:0px; padding:10px", target: "_blank", rel: "nofollow" %>
-                                            </div>
-                                          </div>
-                                          <div id="show-more-details-<%= index %>" class="row" style="background-color:rgba(var(--secondary-rgb), 0.1);border-radius: 5px; 
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);display:none; margin: 0px 60px 0px 30px; padding: 20px">
-                                            <strong>Title:</strong> <%= obj["title"] %>
-                                            <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                            <strong>Format:</strong>: <%= obj["format"] %>
-                                            <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                            <strong>download URL</strong>: <%= link_to obj["donwloadURL"], obj["downloadURL"], target: "_blank", rel: "nofollow" %>
-                                            <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                            <strong>License</strong>: <%= link_to obj["license"]["name"], obj["downloadURL"], target: "_blank", rel: "nofollow" %>
-                                            <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                            <strong>Media type</strong>: <%= obj["mediaType"] %>
-                                            <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                          </div>
-                                         <% end %>
-                                      </div>
-                                      <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                      <div style="width: 100%" class="row">
-                                        <p style="font-weight: bold">Additionl info</p>
-                                        <div style="display: flex; flex-direction: column; margin-left: 30px">
-                                          <span><strong>Dataset page: </strong> <a href="<%=result["landingPage"]%>"> <%=result["landingPage"]%> </a></span>
-                                          <span><strong>Licenses: </strong><a href="<%=result["distributions"][0]["license"]["uri"]%> "> <%=result["distributions"][0]["license"]["name"]%> </a></span></span>
-                                          <span><strong>Publisher: </strong> <%if result["publisher"].present?%><%=result["publisher"]["name"]%></span><% end %>
-                                          <span><strong>Creator: </strong> <%if result["creator"].present?%><%=result["creator"]["name"]%></span><% end %>
-                                          <span><strong>Release date: </strong><%=result["releaseDate"]%></span>
-                                          <span><strong>Update date: </strong><%=result["updateDate"]%></span>
-                                          <span><strong>Language: </strong><%=result["language"][0]%></span>
-                                          <span><strong>Topic: </strong><%if result["theme"].present?%><%=result["theme"][0]["prefLabel"][0]["value"]%></span><% end %>
-                                          <span><strong>Identifier: </strong><%=result["identifier"]%></span>
-                                          <span><strong>Other identifiers: </strong><%=result["otherIdentifier"][0]%></span>
-                                        </div>
-                                      </div>
-                                      <hr style= "height: 1px; border: none;background-color: lightgray; width: 100%; padding: 0px;margin: 0px">
-                                    </div>
-                                  </div>
-                                  <a href="#" class="expand-link button small hollow card__button" style="margin-top: 2em" data-card-index="<%= index %>">Read More</a>
-                                  <div class="format-container">
-                                    <% displayed_formats = [] %>
-                                    <% result["distributions"].each do |elem| %>
-                                      <% unless elem["format"].to_s.empty? || displayed_formats.include?(elem["format"]) %>
-                                        <div class="format-box">
-                                          <%= elem["format"] %>
-                                        </div>
-                                        <% displayed_formats << elem["format"] %>
-                                      <% end %>
-                                    <% end %>
-                                  </div>
-                                </div>
-                              </div>
-                            <% end %>
-                            <!-- Buttons on bottom -->
-                            <div class="div-buttons-bottom" style="margin-top: 10px">
-                              <% if @start.to_i > 0 %>
-                                <button class="button"><%= link_to "First Page", idra_path(request.query_parameters.merge(start: 0)), rel: "nofollow" %></button>
-                              <% else %>
-                                <button class="button" disabled>First Page</button>
-                              <% end %>
-                              <% if @start.to_i > 0 %>
-                                <button class="button"><%= link_to "Previous", idra_path(request.query_parameters.merge(start: @start.to_i - @rows.to_i)), rel: "nofollow" %></button>
-                              <% else %>
-                                <button class="button" disabled>Previous</button>
-                              <% end %>
-                              <div style="color: var(--secondary); margin: 10px">
-                                
-                                <strong><%= current_page %></strong>
-                              </div>
-                              <% if @start.to_i + @rows.to_i < @total_results %>
-                                <button class="button"><%= link_to "Next", idra_path(request.query_parameters.merge(start: @start.to_i + @rows.to_i)), rel: "nofollow" %></button>
-                              <% else %>
-                                <button class="button" disabled>Next</button>
-                              <% end %>
-                              <% if @rows.to_i > 0 && @total_results.to_i > 0 && @start.to_i < ((@total_results.to_i - 1) / @rows.to_i) * @rows.to_i %>
-                                <button class="button"><%= link_to "Last Page", idra_path(request.query_parameters.merge(start: ((@total_results.to_i - 1) / @rows.to_i) * @rows.to_i)), rel: "nofollow" %></button>
-                              <% else %>
-                                <button class="button" disabled>Last Page</button>
-                              <% end %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <script>
-                        $(document).ready(function() {
-                          // When the "Read More" link is clicked
-                          $(".expand-link").click(function(e) {
-                            e.preventDefault();
-
-                            // Find the parent results-card div
-                            const resultsCard = $(this).closest(".results-card");
-
-                            // Find the corresponding results-card-body div
-                            const resultCardBody = resultsCard.find(".results-card-body");
-
-                            // Find the full content and truncated content
-                            const fullContent = resultsCard.find(".full-content");
-                            const truncatedContent = resultsCard.find(".truncated-content");
-
-                            // Toggle the visibility of the full content and truncated content
-                            fullContent.toggle();
-                            truncatedContent.toggle();
-
-                            // Toggle a class to indicate expanded/collapsed state
-                            resultCardBody.toggleClass("expanded");
-
-                            // Update the link text based on the class
-                            const linkText = resultCardBody.hasClass("expanded") ? "Read Less" : "Read More";
-                            $(this).text(linkText);
-                          });
-                        });
-
-
-                         $(document).ready(function() {
-                          // When the "Show More" button is clicked
-                          $("#showMoreTagsBtn").click(function(e) {
-                            e.preventDefault();
-
-
-                            // Toggle the visibility of the hidden facet items
-                            $(".facet-item-tags.hidden").toggle();
-
-                            // Update the "Show More" button text
-                            $(this).text(function (_, text) {
-                              return text === "Show all results" ? "Show less" : "Show all results";
-                            });
-                          });
-                        });
-
-
-                          $(document).ready(function() {
-                          // When the "Show More" button is clicked
-                          $("#showMoreFormatsBtn").click(function(e) {
-                            e.preventDefault();
-
-                            // Toggle the visibility of the hidden facet items
-                            $(".facet-item-formats.hidden").toggle();
-
-                            // Update the "Show More" button text
-                            $(this).text(function (_, text) {
-                              return text === "Show all results" ? "Show less" : "Show all results";
-                            });
-                          });
-                        });
-
-                        $(document).ready(function() {
-                          // When the "Show More" button is clicked
-                          $("#showMoreLicensesBtn").click(function(e) {
-                            e.preventDefault();
-
-                            // Toggle the visibility of the hidden facet items
-                            $(".facet-item-licenses.hidden").toggle();
-
-                            // Update the "Show More" button text
-                            $(this).text(function (_, text) {
-                              return text === "Show all results" ? "Show less" : "Show all results";
-                            });
-                          });
-                        });
-
-                        $(document).ready(function() {
-                          // When the "Show More" button is clicked
-                          $("#showMoreCataloguesBtn").click(function(e) {
-                            e.preventDefault();
-
-                            // Toggle the visibility of the hidden facet items
-                            $(".facet-item-catalogues.hidden").toggle();
-
-                            // Update the "Show More" button text
-                            $(this).text(function (_, text) {
-                              return text === "Show all results" ? "Show less" : "Show all results";
-                            });
-                          });
-                        });
-
-                        $(document).ready(function() {
-                          // When the "Show More" button is clicked
-                          $("#showMoreCategoriesBtn").click(function(e) {
-                            e.preventDefault();
-
-                            // Toggle the visibility of the hidden facet items
-                            $(".facet-item-categories.hidden").toggle();
-
-                            // Update the "Show More" button text
-                            $(this).text(function (_, text) {
-                              return text === "Show all results" ? "Show less" : "Show all results";
-                            });
-                          });
-                        });
-
-
-                         // + button show div
-
-
-                           document.addEventListener("DOMContentLoaded", function() {
-                           const showMoreButtons = document.querySelectorAll(".show-more-details-button");
-
-                           showMoreButtons.forEach(button => {
-                             button.addEventListener("click", function() {
-                               const card = button.closest(".results-card");
-                               const targetId = button.getAttribute("data-target");
-                               const detailsDiv = card.querySelector("#" + targetId);
-
-                               if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
-                                 detailsDiv.style.display = "block";
-                                 button.textContent = "-";
-                               } else {
-                                 detailsDiv.style.display = "none";
-                                 button.textContent = "+";
-                               }
-                             });
-                           });
-                         });
-                      </script>
-                      
-                      </div>
+</script>
