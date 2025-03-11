@@ -288,156 +288,151 @@ export default function createEditorToolbar(editor) {
           .catch((error) => {
             console.error('Error updating partial view:', error);
             reject(error);
-          });
+          });s
       } else {
         resolve();
       }
     });
   }
   
-  async function openModal() {
+  async function openModal(editor) {
     try {
       await fetchData(); // Assicurati che i dati siano stati recuperati
-  
-      // Crea e stila il contenitore del modal
-      const modalContainer = document.createElement('div');
-      modalContainer.style.position = 'fixed';
-      modalContainer.style.top = '0';
-      modalContainer.style.left = '0';
-      modalContainer.style.width = '100%';
-      modalContainer.style.height = '100%';
-      modalContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-      modalContainer.style.display = 'flex';
-      modalContainer.style.justifyContent = 'center';
-      modalContainer.style.alignItems = 'center';
-      modalContainer.style.zIndex = '1000';
-  
-      // Crea e stila l'elemento modal con dimensioni fisse
-      const modal = document.createElement('div');
-      modal.style.backgroundColor = '#fff';
-      modal.style.borderRadius = '8px';
-      modal.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.3)';
-      modal.style.width = '800px'; // Larghezza fissa
-      modal.style.minHeight = '80vh'; // Altezza minima
-      modal.style.maxHeight = '80vh'; // Altezza massima
-      modal.style.position = 'relative';
-      modal.style.overflowY = 'auto'; // Previene lo scroll nel modal
-      modal.style.padding = '1em'; // Aggiungi padding per estetica
-      modal.style.boxSizing = 'border-box'; // Include padding nel calcolo dell'altezza
-  
-      // Crea e stila il contenuto del modal
-      const modalContent = document.createElement('div');
-      modalContent.id = 'modalContent';
-      modalContent.style.overflow = 'initial'
-      modalContent.style.maxHeight = '50vh'
-  
-      // Crea e stila la barra di ricerca
-      const searchBar = document.createElement('input');
-      searchBar.type = 'text';
-      searchBar.placeholder = 'Search...';
-      searchBar.style.width = '100%';
-      searchBar.style.padding = '10px';
-      searchBar.style.boxSizing = 'border-box';
-      searchBar.style.border = '1px solid #ccc';
-      searchBar.style.borderRadius = '5px';
-      searchBar.style.marginBottom = '10px';
-      searchBar.addEventListener('input', filterResults);
-  
-      // Crea e stila il contenitore dei link
-      const linksDiv = document.createElement('div');
-      linksDiv.id = 'linksContainer';
-      linksDiv.style.display = 'flex';
-      linksDiv.style.flexDirection = 'column';
-      linksDiv.style.gap = '10px'; // Aggiusta lo spazio tra gli elementi
-  
-      // Crea e stila il titolo del modal
-      const titleElement = document.createElement('h1');
-      titleElement.textContent = "Saved Datasets";
-      titleElement.style.textAlign = 'center';
-      modal.appendChild(titleElement);
-  
-      // Memorizza gli item originali della lista
-      const listItems = modalData.map(element => {
-        const listItem = document.createElement('div');
-        listItem.classList.add('list-item');
-        listItem.style.display = 'flex';
-        listItem.style.justifyContent = 'space-between';
-        listItem.style.alignItems = 'center';
-  
-        const link = document.createElement('a');
-        link.href = element.url;
-        link.textContent = element.title;
-        link.target = "_blank"; // Apri in una nuova finestra
-  
-        var disabled = false;
-  
-        const copyButton = document.createElement('button');
-        copyButton.textContent = 'Add';
-        copyButton.style.marginLeft = '10px';
-        copyButton.style.borderRadius = '5px';
-        copyButton.style.padding = '5px 10px';
-        copyButton.style.color = 'white';
-        copyButton.style.cursor = 'pointer'; // Imposta il cursore a mano
-        copyButton.style.backgroundColor = '#2F4EA1'; // Imposta il colore di sfondo
-  
-        // Gestisci il click sul bottone per copiare e incollare il link nell'editor
-        copyButton.addEventListener('click', () => {
-          copyButton.textContent = 'Done';
-          copyButton.disabled = true;
-          copyButton.style.color = 'grey';
-          copyButton.style.cursor = "not-allowed";
-          copyButton.style.opacity = "0.6";
-          copyButton.style.border = '1px solid grey';
-          copyButton.style.backgroundColor = 'transparent';
-          disabled = true;
-        
-          // Inserisci il link nell'editor
-          const linkHTML = `<a href="${element.url}" target="_blank">${element.title}</a>`;
-          editor.commands.insertContent(linkHTML);
-        
-          // Aggiungi una nuova riga sotto il link
-          editor.commands.insertContent('<p><br></p>'); // Usa un paragrafo vuoto per forzare il nuovo rigo
+    
+      // Crea il markup HTML per il modale usando gli stili del _datasets_list.html.erb
+      const modalHtml = `
+        <div class="modal-overlay" style="
+          position: fixed; 
+          top: 0; 
+          left: 0; 
+          width: 100%; 
+          height: 100%; 
+          background-color: rgba(0, 0, 0, 0.5); 
+          z-index: 1000; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center;">
+            
+          <div class="modal" style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            width: 60%;
+            height: 80%;
+            border-radius: 15px;
+            overflow: hidden;">
+            
+            <h2 style="text-align: center; padding: 5px 0 20px 0;">Saved Datasets</h2>
+            
+            <input type="text" id="searchBar" placeholder="Search Datasets" style="
+              width: 100%; 
+              padding: 10px; 
+              box-sizing: border-box; 
+              border: 1px solid #ccc; 
+              border-radius: 5px; 
+              margin-bottom: 10px;">
+              
+            <div id="linksContainer" style="
+              height: 60vh;
+              overflow-y: auto;
+              margin-top: 1em;
+              border: 1px solid lightgray;
+              border-radius: 5px;
+              padding: 5px;">
+              
+              ${modalData.map(element => `
+                <div class="dataset-item" style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin: 5px 0;
+                  padding: 0 5px;
+                  transition: background-color 0.2s;">
+                  
+                  <a href="${element.url}" target="_blank" style="flex-grow: 1;">${element.title}</a>
+                  
+                  <button class="button button__secondary outline-none" data-url="${element.url}" data-title="${element.title}" 
+                    style="
+                      margin-left: auto;
+                      border-radius: 5px;
+                      padding: 0 10px;
+                      color: white;
+                      cursor: pointer;
+                      background-color: #2B2347;">Add</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    
+      // Inserisci il modale nel DOM
+      const modalWrapper = document.createElement('div');
+      modalWrapper.innerHTML = modalHtml;
+      const modalElement = modalWrapper.firstElementChild;
+      document.body.appendChild(modalElement);
+    
+      // Aggiungi hover effect ai dataset items
+      const datasetItems = document.querySelectorAll('.dataset-item');
+      datasetItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          item.style.backgroundColor = 'lightgray';
         });
-  
-        listItem.appendChild(link);
-        listItem.appendChild(copyButton);
-        linksDiv.appendChild(listItem);
-  
-        return listItem;
+        item.addEventListener('mouseleave', () => {
+          item.style.backgroundColor = '';
+        });
       });
-  
-      // Funzione per filtrare i risultati in base alla barra di ricerca
-      function filterResults() {
+    
+      // Aggiungi gli event listener
+      const searchBar = document.getElementById('searchBar');
+      searchBar.addEventListener('input', () => {
         const query = searchBar.value.toLowerCase();
+        const listItems = document.querySelectorAll('.dataset-item');
         listItems.forEach(item => {
           const title = item.querySelector('a').textContent.toLowerCase();
-          if (title.includes(query)) {
-            item.style.display = 'flex'; // Mostra l'elemento
-          } else {
-            item.style.display = 'none'; // Nascondi l'elemento
-          }
+          item.style.display = title.includes(query) ? 'flex' : 'none';
         });
-      }
-  
-      // Aggiungi gli elementi alla finestra modale
-      modalContent.appendChild(searchBar);
-      modalContent.appendChild(linksDiv);
-      modal.appendChild(modalContent);
-      modalContainer.appendChild(modal);
-  
-      // Aggiungi la finestra modale al corpo del documento
-      document.body.appendChild(modalContainer);
-  
-      // Aggiungi l'evento di chiusura del modal se si fa clic fuori dal contenitore
-      modalContainer.addEventListener('click', (event) => {
-        // Verifica se il clic è fuori dal modal (non sul contenuto)
-        if (event.target === modalContainer) {
-          modalContainer.remove(); // Rimuovi il modal se il clic è fuori
+      });
+    
+      // Event delegation per i pulsanti di copia
+      document.getElementById('linksContainer').addEventListener('click', (event) => {
+        if (event.target.classList.contains('copy-button')) {
+          const button = event.target;
+          const url = button.dataset.url;
+          const title = button.dataset.title;
+          
+          // Aggiorna lo stile del pulsante
+          button.textContent = 'Done';
+          button.disabled = true;
+          button.style.color = 'grey';
+          button.style.cursor = 'not-allowed';
+          button.style.opacity = '0.6';
+          button.style.border = '1px solid grey';
+          button.style.backgroundColor = 'transparent';
+          
+          // Inserisci il link nell'editor
+          const linkHTML = `<a href="${url}" target="_blank">${title}</a>`;
+          editor.commands.insertContent(linkHTML);
+          editor.commands.insertContent('<p><br></p>');
         }
       });
-  
+    
+      // Chiusura del modale cliccando all'esterno
+      modalElement.addEventListener('click', (event) => {
+        if (event.target === modalElement) {
+          modalElement.remove();
+        }
+      });
+    
+      return modalElement;
     } catch (error) {
       console.error('Errore nel caricare i dati:', error);
+      return null;
     }
   }
   
