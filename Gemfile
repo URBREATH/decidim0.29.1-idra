@@ -20,6 +20,8 @@ gem "truncate_html"
 
 gem "decidim-keycloak", git: "https://github.com/DanieleNoto/decidim-module-keycloak.git", branch: "main"
 
+gem "decidim-iframe", git: "https://github.com/DanieleNoto/decidim-module-iframe.git"
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
