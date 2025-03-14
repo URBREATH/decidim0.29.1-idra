@@ -22,6 +22,9 @@ gem "decidim-keycloak", git: "https://github.com/DanieleNoto/decidim-module-keyc
 
 gem "decidim-iframe", git: "https://github.com/DanieleNoto/decidim-module-iframe.git"
 
+gem "decidim-comments"
+
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 

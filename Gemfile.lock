@@ -796,6 +796,7 @@ DEPENDENCIES
   brakeman (~> 6.1)
   byebug (~> 11.0)
   decidim (= 0.29.1)
+  decidim-comments
   decidim-dev (= 0.29.1)
   decidim-iframe!
   decidim-keycloak!
